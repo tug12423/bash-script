@@ -1,0 +1,17 @@
+#!/bin/bash
+
+for xyz in *.xyz
+
+do
+
+prefix=${xyz/.xyz/}
+#prefix=$xyz
+sed 's/prefix/'$prefix'/' ./job.sh > ${prefix}/job.sh
+
+cd $prefix/
+
+sbatch job.sh
+
+cd ../
+
+done
