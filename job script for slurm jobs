@@ -1,0 +1,39 @@
+#!/bin/bash --login
+#SBATCH --time=24:00:00             # limit of wall clock time - how long the job will run (same as -t)
+#SBATCH --ntasks=3                  # number of tasks - how many tasks (nodes) that you require (same as -n)
+#SBATCH --cpus-per-task=1           # number of CPUs (or cores) per task (same as -c)
+#SBATCH --mem=5G            # memory required per allocated CPU (or core) - amount of memory (in bytes)
+#SBATCH --job-name prefix      # you can give your job a name for easier identification (same as -J)
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-type=END
+#SBATCH --mail-user=email@email.com.  #email address for getting job updates
+
+module load intel/2019a  ### load necessary modules.
+
+######cd "$SLURM_SUBMIT_DIR"                  ### change to the directory where your code is located.
+
+scontrol show job $SLURM_JOB_ID     ### write job information to SLURM output file.
+js -j $SLURM_JOB_ID
+
+i=1
+ while [ $i -lt 500 ]; do                    # Total number of steps is set to be 500 here
+srun -n 3 ~/FLOSIC-2020/flosic/nrlmol_exe >&output.1
+cp FRMORB FRMORB.$i
+cp WFOUT WFOUT.$i
+cp RN4 RUNS
+
+ff=0.0005                   #force tolerance
+ee=0.000001                 # energy tolerance
+f=`awk '{printf "%10.8f\n", $3}' fande.out | tail -1`
+e=`awk '{printf "%10.8f\n", $2-p} {p=$2}' fande.out|tail -1`
+e=$( echo $e | tr -d -)
+echo $e
+echo $f
+if [[ "$e" < "$ee" && "$f" < "$ff" ]]; then
+  i=501
+ echo " "
+ echo "FOD is optimized to desired accuracy"
+else
+ let i=i+1
+fi
+done
