@@ -37,16 +37,27 @@ This script analyzes energy data of different chemical compounds stored in SUMMA
 This script is a submission script for the Slurm workload manager. It specifies the job requirements for running an FLOSIC-2020 code.
 
 #SBATCH --time=24:00:00 sets the wall clock time limit of the job to 24 hours.
+
 #SBATCH --ntasks=3 sets the number of tasks (nodes) needed for the job to 3.
+
 #SBATCH --cpus-per-task=1 sets the number of CPUs (or cores) per task to 1.
+
 #SBATCH --mem=5G sets the memory required per allocated CPU to 5 gigabytes.
+
 #SBATCH --job-name prefix sets the job name to "prefix" for easier identification.
+
 #SBATCH --mail-type=FAIL and #SBATCH --mail-type=END set the email notification to be sent if the job fails or ends, respectively.
+
 #SBATCH --mail-user=email@email.com sets the email address to receive job updates.
+
 module load intel/2019a loads the necessary Intel module for the code.
+
 The script then changes to the directory where the code is located, but this line is commented out.
+
 scontrol show job $SLURM_JOB_ID writes job information to the SLURM output file.
+
 js -j $SLURM_JOB_ID is a Slurm command to check job status.
+
 The script then enters a loop that runs the FLOSIC-2020/flosic/nrlmol_exe code and outputs the results to a file named "output.1". The code continues to run until either the force or energy tolerance is met, or the total number of steps has reached 500. The force tolerance is set to 0.0005, and the energy tolerance is set to 0.000001. If either tolerance is met, the loop terminates and the code outputs a message indicating that the FOD has been optimized to the desired accuracy.
 
 **Job submission for multiple files**
