@@ -48,3 +48,23 @@ The script then changes to the directory where the code is located, but this lin
 scontrol show job $SLURM_JOB_ID writes job information to the SLURM output file.
 js -j $SLURM_JOB_ID is a Slurm command to check job status.
 The script then enters a loop that runs the FLOSIC-2020/flosic/nrlmol_exe code and outputs the results to a file named "output.1". The code continues to run until either the force or energy tolerance is met, or the total number of steps has reached 500. The force tolerance is set to 0.0005, and the energy tolerance is set to 0.000001. If either tolerance is met, the loop terminates and the code outputs a message indicating that the FOD has been optimized to the desired accuracy.
+
+**Job submission for multiple files**
+
+This script is a bash shell script that performs a series of actions on all files with the ".xyz" extension in the current working directory.
+
+The script starts with a "for" loop that goes through all files with the ".xyz" extension in the current working directory. For each file, the following actions are performed:
+
+The variable "prefix" is defined. This variable is created by removing the ".xyz" extension from the file name using the "sed" command.
+
+The "sed" command is used to replace the string "prefix" in the "job.sh" script with the value of the "prefix" variable. This generates a new script with the name "job.sh" in a directory with the same name as the ".xyz" file.
+
+The script changes to the directory created in step 2 using the "cd" command.
+
+The "sbatch" command is used to submit the newly created "job.sh" script to a batch job scheduler for processing.
+
+The script changes back to the original working directory using the "cd" command.
+
+The loop then repeats for the next ".xyz" file in the current working directory.
+
+This script is useful for processing multiple ".xyz" files in parallel using a batch job scheduler.
