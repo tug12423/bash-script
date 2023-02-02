@@ -32,7 +32,7 @@ Finally, the script deletes the files pref, enfile, and conv.
 This script analyzes energy data of different chemical compounds stored in SUMMARY files in different folders. It first calculates the energy values for different elements (H, C, O, S, Si) and stores them in a file named "total-energy.dat". Then, it calculates the binding energy of different chemical compounds (SiH4, SiO, S2, C2H2O2, C3H4, C4H8) based on the energy values of their constituent elements and stores them in a file named "ae.gsic.dat". The script then compares these calculated binding energies with reference values stored in a file named "ae6_ref_kcal.dat" and calculates the mean absolute error (MAE), mean error (ME), and mean absolute percentage error (MAPE). These values are stored in a file named "mae.gsic.dat". The script also performs some data processing tasks such as storing intermediate results in temporary files and then merging them to form the final result files.
 
 
-Job script for slurm jobs
+**Job script for slurm jobs**
 
 This script is a submission script for the Slurm workload manager. It specifies the job requirements for running an FLOSIC-2020 code.
 
