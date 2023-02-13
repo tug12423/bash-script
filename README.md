@@ -1,6 +1,6 @@
 # bash-script
 
-**convergence-check.sh** is a bash script file checks if the energy and forces on a FLOSIC (Fermi–Löwdin self-interaction correction) calculations are converged. 
+## **convergence-check.sh** is a bash script file checks if the energy and forces on a FLOSIC (Fermi–Löwdin self-interaction correction) calculations are converged. 
 
 
 This shell script is checking the convergence of a simulation. The script has the following steps:
@@ -27,12 +27,12 @@ The script then combines the data in the files pref, enfile, and conv using past
 
 Finally, the script deletes the files pref, enfile, and conv.
 
-**get-energy.sh** produces an output file that gives the total energies and the atomization energies of the AE6 set. Atomization energies referrs to the energy required to break a molecule into its constituent atoms. 
+## **get-energy.sh** produces an output file that gives the total energies and the atomization energies of the AE6 set. Atomization energies referrs to the energy required to break a molecule into its constituent atoms. 
 
 This script analyzes energy data of different chemical compounds stored in SUMMARY files in different folders. It first calculates the energy values for different elements (H, C, O, S, Si) and stores them in a file named "total-energy.dat". Then, it calculates the binding energy of different chemical compounds (SiH4, SiO, S2, C2H2O2, C3H4, C4H8) based on the energy values of their constituent elements and stores them in a file named "ae.gsic.dat". The script then compares these calculated binding energies with reference values stored in a file named "ae6_ref_kcal.dat" and calculates the mean absolute error (MAE), mean error (ME), and mean absolute percentage error (MAPE). These values are stored in a file named "mae.gsic.dat". The script also performs some data processing tasks such as storing intermediate results in temporary files and then merging them to form the final result files.
 
 
-**Job script for slurm jobs**
+## **Job script for slurm jobs**
 
 This script is a submission script for the Slurm workload manager. It specifies the job requirements for running an FLOSIC-2020 code.
 
@@ -60,7 +60,7 @@ js -j $SLURM_JOB_ID is a Slurm command to check job status.
 
 The script then enters a loop that runs the FLOSIC-2020/flosic/nrlmol_exe code and outputs the results to a file named "output.1". The code continues to run until either the force or energy tolerance is met, or the total number of steps has reached 500. The force tolerance is set to 0.0005, and the energy tolerance is set to 0.000001. If either tolerance is met, the loop terminates and the code outputs a message indicating that the FOD has been optimized to the desired accuracy.
 
-**Job submission for multiple files**
+## **Job submission for multiple files**
 
 This script is a bash shell script that performs a series of actions on all files with the ".xyz" extension in the current working directory.
 
